@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 
-// getting the connection string
 const MONGO_URL = process.env.MONGO_URL;
 
 if (!MONGO_URL) {
-  throw new Error("Please pronide connection string in the .env.local file");
+  throw new Error("Please provide connection string in the .env.local file");
 }
 
-// accessing mongoose from the global variable
+//accessing mongoose from the global variable
 let cached = global.mongoose;
 
 // checking if mongoose is not in the global variable then add mongoose connection
@@ -16,12 +15,12 @@ if (!cached) {
 }
 
 async function dbConnect() {
-  //     checking if conection is already established, then return it
+  //checking if connection is established, then return it
   if (cached.conn) {
     return cached.conn;
   }
 
-  if (cached.promise) {
+  if (!cached.promise) {
     const opts = {
       bufferCommands: false,
     };
